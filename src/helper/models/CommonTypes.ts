@@ -12,3 +12,5 @@ export type Link = {
   id: string;
   url?: string;
 };
+
+export type Severity = 'blocker' | 'critical' | 'normal' | 'minor' | 'trivial';

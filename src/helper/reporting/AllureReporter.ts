@@ -3,7 +3,7 @@ import * as allure from "allure-js-commons";
 import * as fs from "fs";
 import { configManager } from "@config/ConfigManager";
 import { Logger } from "../logger/Logger";
-import { AllureMeta } from "./AllureMeta";
+import { TestMetadataOptions } from "./AllureMeta";
 
 const EXPLICIT_DESCRIPTION_SET = Symbol("explicitAllureDescriptionSet");
 
@@ -42,70 +42,109 @@ export class AllureReporter {
    * Uses the allure-js-commons runtime facade so metadata is emitted in the
    * format expected by the `allure-playwright` reporter.
    */
-  static async attachDetails(meta: AllureMeta): Promise<void> {
-    const testInfo = test.info() as AllureTestInfo;
+static async attachDetails(meta: TestMetadataOptions): Promise<void> {
+  const testInfo = test.info();
 
-    if (meta.owner) {
-      await allure.owner(meta.owner);
+  const addAnnotation = (type: string, value: string) => {
+    const exists = testInfo.annotations.some(
+      (a) => a.type === type && a.description === value
+    );
+
+    if (!exists) {
+      testInfo.annotations.push({ type, description: value });
     }
-    if (meta.epic) {
-      await allure.epic(meta.epic);
+  };
+
+  const handleSingle = async (
+    value: string | undefined,
+    allureFn: ((v: string) => PromiseLike<void>) | null,
+    type: string
+  ) => {
+    if (!value) return;
+
+    if (allureFn) {
+      await allureFn(value);
     }
-    if (meta.feature) {
-      await allure.feature(meta.feature);
-    }
-    if (meta.severity) {
-      await allure.severity(meta.severity);
-    }
-    if (meta.component) {
-      await allure.label("component", meta.component);
-    }
-    if (meta.story) {
-      const stories = Array.isArray(meta.story) ? meta.story : [meta.story];
-      for (const story of stories) {
-        await allure.story(story);
+
+    addAnnotation(type, value);
+  };
+
+  const handleMultiple = async (
+    values: string[] | undefined,
+    allureFn: ((v: string) => PromiseLike<void>) | null,
+    type: string
+  ) => {
+    if (!values?.length) return;
+
+    for (const value of values) {
+      if (allureFn) {
+        await allureFn(value);
       }
+      addAnnotation(type, value);
     }
+  };
 
-    if (meta.tags?.length) {
-      await allure.tags(...meta.tags);
-    }
+  // ===== Core hierarchy =====
+  await handleSingle(meta.epic, allure.epic, "allure:epic");
+  await handleSingle(meta.feature, allure.feature, "allure:feature");
 
-    if (meta.issues) {
-      for (const issue of meta.issues) {
-        if (issue.url) {
-          await allure.issue(issue.url, issue.id);
-          continue;
-        }
+  if (meta.story) {
+    const stories = Array.isArray(meta.story) ? meta.story : [meta.story];
+    await handleMultiple(stories, allure.story, "allure:story");
+  }
 
+  await handleSingle(meta.severity, allure.severity, "allure:severity");
+  await handleSingle(meta.owner, allure.owner, "allure:owner");
+
+  if (meta.component) {
+    await allure.label("component", meta.component);
+    addAnnotation("allure:component", meta.component);
+  }
+
+  // ===== Tags =====
+  if (meta.tags?.length) {
+    await allure.tags(...meta.tags);
+    meta.tags.forEach((tag) => addAnnotation("allure:tag", tag));
+  }
+
+  // ===== Issues =====
+  if (meta.issues?.length) {
+    for (const issue of meta.issues) {
+      if (issue.url) {
+        await allure.issue(issue.url, issue.id);
+      } else {
         await allure.label("issue", issue.id);
       }
-    }
-    if (meta.tmsIds) {
-      for (const tmsId of meta.tmsIds) {
-        if (tmsId.url) {
-          await allure.tms(tmsId.url, tmsId.id);
-          continue;
-        }
 
-        await allure.label("tms", tmsId.id);
-      }
+      addAnnotation("allure:issue", issue.id);
     }
-
-    if (meta.links) {
-      for (const link of meta.links) {
-        await allure.link(link.id, link.url);
-      }
-    }
-    if (meta.description) {
-      await allure.description(meta.description);
-      testInfo[EXPLICIT_DESCRIPTION_SET] = true;
-    }
-
-    Logger.info(
-      `Allure metadata attached: ${meta.epic || ""} > ${meta.feature || ""} > ${Array.isArray(meta.story) ? meta.story.join(", ") : meta.story || ""}`
-    );
   }
+
+  // ===== TMS =====
+  if (meta.tmsLinks?.length) {
+    for (const tms of meta.tmsLinks) {
+      if (tms.url) {
+        await allure.tms(tms.url, tms.id);
+      } else {
+        await allure.label("tms", tms.id);
+      }
+
+      addAnnotation("allure:tms", tms.id);
+    }
+  }
+
+  // ===== Description =====
+  if (meta.description) {
+    await allure.description(meta.description);
+    addAnnotation("allure:description", meta.description);
+  }
+
+  Logger.info(
+    `Allure metadata attached: ${meta.epic || ""} > ${meta.feature || ""} > ${
+      Array.isArray(meta.story) ? meta.story.join(", ") : meta.story || ""
+    }`
+  );
+}
 
   /**
    * Create a step in Allure report

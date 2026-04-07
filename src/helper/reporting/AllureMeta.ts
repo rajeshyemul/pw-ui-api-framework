@@ -1,19 +1,23 @@
-import { Link } from "@helper/models/CommonTypes";
+import { Link, Severity } from "@helper/models/CommonTypes";
 
-export type AllureMeta = {
+export type TestMetadataOptions = {
+  // ===== Core hierarchy =====
   epic?: string;
   feature?: string;
   story?: string | string[];
-  severity?: string;
+  severity?: Severity;
 
-  issues?: Link[];
-  tmsIds?: Link[];
-  links?: Link[];
-
+  // ===== Ownership =====
   owner?: string;
   component?: string;
 
+  // ===== Classification =====
   tags?: string[];
 
+  // ===== External references =====
+  issues?: Link[];
+  tmsLinks?: Link[];
+
+  // ===== Optional =====
   description?: string;
 };
