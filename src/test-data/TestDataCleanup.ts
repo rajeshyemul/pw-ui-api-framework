@@ -1,5 +1,5 @@
 import { ApiClient } from '@core/ApiClient';
-import { logger } from '@core/Logger';
+import { logger } from '@helper/logger/Logger';
 import { TestDataRegistry } from '@test-data/TestDataRegistry';
 
 export class TestDataCleanup {

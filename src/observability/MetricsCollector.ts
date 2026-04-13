@@ -1,6 +1,6 @@
 import * as fs   from 'fs';
 import * as path from 'path';
-import { logger } from '../core/Logger';
+import { logger } from '@helper/logger/Logger';
 
 /**
  * MetricsCollector instruments every HTTP call made through the framework.

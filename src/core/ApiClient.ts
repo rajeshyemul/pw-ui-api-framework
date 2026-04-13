@@ -1,7 +1,7 @@
 import { APIRequestContext, APIResponse } from '@playwright/test';
 import { ConfigManager } from '@config/ConfigManager';
 import { authManager } from '@core/AuthManager';
-import { logger } from '@core/Logger';
+import { logger } from '@helper/logger/Logger';
 import { metricsCollector } from '@observability/MetricsCollector';
 
 export class ApiClient {

@@ -1,6 +1,6 @@
 import { AllureReporter } from '@helper/reporting/AllureReporter';
 import { apiTest as test } from '@fixtures/ApiFixture';
-import { ResponseValidator } from '@assertions/ResponseValidator';
+import { ResponseValidator } from '@helper/assertions/api/ResponseValidator';
 import { RoomSchema, RoomsListSchema } from '@contracts/RoomContract';
 
 test.describe('@contract - Restful Booker Platform Room API contracts', () => {

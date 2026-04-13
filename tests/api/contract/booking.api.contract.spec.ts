@@ -1,6 +1,6 @@
 import { AllureReporter } from '@helper/reporting/AllureReporter';
 import { apiTest as test } from '@fixtures/ApiFixture';
-import { ResponseValidator } from '@assertions/ResponseValidator';
+import { ResponseValidator } from '@helper/assertions/api/ResponseValidator';
 import { BookingResponseSchema, BookingSummarySchema } from '@contracts/BookingContract';
 import { BookingFactory } from '@test-data/BookingFactory';
 

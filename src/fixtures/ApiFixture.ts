@@ -1,7 +1,7 @@
 import { APIRequestContext, request, test as base } from '@playwright/test';
 import { ConfigManager } from '@config/ConfigManager';
 import { ApiClient } from '@core/ApiClient';
-import { AssertUtils } from '@helper/asserts/AssertUtils';
+import { AssertUtils } from '@helper/assertions/ui/AssertUtils';
 import { AuthService } from '@services/AuthService';
 import { BookingService } from '@services/BookingService';
 import { RoomService } from '@services/RoomService';

@@ -1,4 +1,4 @@
-import { ResponseValidator } from '@assertions/ResponseValidator';
+import { ResponseValidator } from '@helper/assertions/api/ResponseValidator';
 import { ApiClient } from '@core/ApiClient';
 import {
   ActionSuccessResponse,

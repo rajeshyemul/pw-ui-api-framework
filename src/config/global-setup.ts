@@ -1,5 +1,5 @@
 import { MetricsCollector, metricsCollector } from '@observability/MetricsCollector';
-import { logger } from '@core/Logger';
+import { logger } from '@helper/logger/Logger';
 
 export default async function globalSetup(): Promise<void> {
   MetricsCollector.clearBuffer();

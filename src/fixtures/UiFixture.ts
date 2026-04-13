@@ -1,7 +1,7 @@
 import '@config/PageSetup';
 import { test as baseTest } from '@playwright/test';
 import { PageActions } from '@helper/actions/PageActions';
-import { AssertUtils } from '@helper/asserts/AssertUtils';
+import { AssertUtils } from '@helper/assertions/ui/AssertUtils';
 import { Logger } from '@helper/logger/Logger';
 import { AdminLoginPage } from '@pages/adminLoginPage';
 import { AdminRoomsPage } from '@pages/adminRoomsPage';

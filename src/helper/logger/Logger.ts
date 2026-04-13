@@ -104,3 +104,5 @@ export class Logger {
     this.logger.info(SetupConstants.LOGGER_LINE_SEPARATOR);
   }
 }
+
+export const logger = Logger;

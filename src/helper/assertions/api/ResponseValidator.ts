@@ -1,7 +1,7 @@
 import { expect, APIResponse } from '@playwright/test';
 import { ZodSchema, ZodError } from 'zod';
-import { logger } from '../core/Logger';
-import { metricsCollector } from '../observability/MetricsCollector';
+import { logger } from '@helper/logger/Logger';
+import { metricsCollector } from '@observability/MetricsCollector';
 
 export class ResponseValidator {
   // ─── HTTP Assertions ──────────────────────────────────────────────────────

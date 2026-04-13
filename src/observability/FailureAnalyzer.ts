@@ -1,4 +1,4 @@
-import { logger } from '../core/Logger';
+import { logger } from '@helper/logger/Logger';
 import { metricsCollector, RequestMetric } from './MetricsCollector';
 
 /**

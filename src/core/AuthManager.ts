@@ -1,5 +1,5 @@
 import { ApiClient } from '@core/ApiClient';
-import { logger } from '@core/Logger';
+import { logger } from '@helper/logger/Logger';
 import { ConfigManager } from '@config/ConfigManager';
 import { LoginRequest, LoginResponse } from '@contracts/AuthContract';
 

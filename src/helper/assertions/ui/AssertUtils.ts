@@ -1,6 +1,6 @@
 import { expect } from '@playwright/test';
-import { Logger } from '../logger/Logger';
-import { StepRunner } from '../reporting/StepRunner';
+import { Logger } from '@helper/logger/Logger';
+import { StepRunner } from '@helper/reporting/StepRunner';
 
 export class AssertUtils {
   /**

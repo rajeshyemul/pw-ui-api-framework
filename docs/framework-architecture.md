@@ -626,8 +626,8 @@ The UI layer sits on top of helper abstractions that own low-level mechanics.
 - [src/helper/actions/DropDownActions.ts](/Users/rajesh.yemul/Practice%20Project/pw-ui-api-framework/src/helper/actions/DropDownActions.ts)
 - [src/helper/actions/CheckboxActions.ts](/Users/rajesh.yemul/Practice%20Project/pw-ui-api-framework/src/helper/actions/CheckboxActions.ts)
 - [src/helper/waits/WaitUtils.ts](/Users/rajesh.yemul/Practice%20Project/pw-ui-api-framework/src/helper/waits/WaitUtils.ts)
-- [src/helper/asserts/AssertUtils.ts](/Users/rajesh.yemul/Practice%20Project/pw-ui-api-framework/src/helper/asserts/AssertUtils.ts)
-- [src/helper/asserts/ExpectUtils.ts](/Users/rajesh.yemul/Practice%20Project/pw-ui-api-framework/src/helper/asserts/ExpectUtils.ts)
+- [src/helper/assertions/ui/AssertUtils.ts](/Users/rajesh.yemul/Practice%20Project/pw-ui-api-framework/src/helper/assertions/ui/AssertUtils.ts)
+- [src/helper/assertions/ui/ExpectUtils.ts](/Users/rajesh.yemul/Practice%20Project/pw-ui-api-framework/src/helper/assertions/ui/ExpectUtils.ts)
 
 ### Why This Layer Exists
 
@@ -791,7 +791,6 @@ The API core layer is the transport and authentication foundation for all API te
 
 - [src/core/ApiClient.ts](/Users/rajesh.yemul/Practice%20Project/pw-ui-api-framework/src/core/ApiClient.ts)
 - [src/core/AuthManager.ts](/Users/rajesh.yemul/Practice%20Project/pw-ui-api-framework/src/core/AuthManager.ts)
-- [src/core/Logger.ts](/Users/rajesh.yemul/Practice%20Project/pw-ui-api-framework/src/core/Logger.ts)
 
 ### Why This Layer Exists
 
@@ -1011,8 +1010,8 @@ This layer turns raw responses into validated framework outcomes.
 
 ### Main Files
 
-- [src/assertions/ResponseValidator.ts](/Users/rajesh.yemul/Practice%20Project/pw-ui-api-framework/src/assertions/ResponseValidator.ts)
-- [src/assertions/ContractValidator.ts](/Users/rajesh.yemul/Practice%20Project/pw-ui-api-framework/src/assertions/ContractValidator.ts)
+- [src/helper/assertions/api/ResponseValidator.ts](/Users/rajesh.yemul/Practice%20Project/pw-ui-api-framework/src/helper/assertions/api/ResponseValidator.ts)
+- [src/helper/assertions/api/ContractValidator.ts](/Users/rajesh.yemul/Practice%20Project/pw-ui-api-framework/src/helper/assertions/api/ContractValidator.ts)
 
 ### Why This Layer Exists
 
@@ -1384,7 +1383,6 @@ The framework uses a shared logging model across execution types.
 ### Main Files
 
 - [src/helper/logger/Logger.ts](/Users/rajesh.yemul/Practice%20Project/pw-ui-api-framework/src/helper/logger/Logger.ts)
-- [src/core/Logger.ts](/Users/rajesh.yemul/Practice%20Project/pw-ui-api-framework/src/core/Logger.ts)
 
 ### Why This Layer Exists
 

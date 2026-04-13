@@ -1,8 +1,8 @@
 import { expect, Expect, Locator } from '@playwright/test';
-import { LocatorFactory } from '../actions/LocatorFactory';
-import { PageActions } from '../actions/PageActions';
-import { Logger } from '../logger/Logger';
-import { StepRunner } from '../reporting/StepRunner';
+import { LocatorFactory } from '@helper/actions/LocatorFactory';
+import { PageActions } from '@helper/actions/PageActions';
+import { Logger } from '@helper/logger/Logger';
+import { StepRunner } from '@helper/reporting/StepRunner';
 
 export type SoftOption = {
   soft?: boolean;

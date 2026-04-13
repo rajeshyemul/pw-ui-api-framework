@@ -1,6 +1,6 @@
 import { FailureAnalyzer } from '@observability/FailureAnalyzer';
 import { MetricsCollector } from '@observability/MetricsCollector';
-import { logger } from '@core/Logger';
+import { logger } from '@helper/logger/Logger';
 
 export default async function globalTeardown(): Promise<void> {
   logger.info('═══════════════════════════════════════════════════════════');
