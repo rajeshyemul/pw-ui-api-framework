@@ -7,6 +7,7 @@ import { Logger } from '../logger/Logger';
 
 export class GenerateReports {
   private static readonly REPORT_ROOT = path.resolve(process.cwd(), 'reports');
+  private static readonly FLAKY_REPORT_ROOT = path.resolve(process.cwd(), 'flaky-report');
 
   private static openFile(filePath: string): void {
     const normalizedPath = path.resolve(filePath);
@@ -122,6 +123,36 @@ Please run tests first: npm test
   }
 
   /**
+   * Opens the latest flaky test HTML report.
+   * Prefers the most recent timestamped snapshot and falls back to the root latest report.
+   */
+  public static openFlakyReport(): void {
+    const root = this.FLAKY_REPORT_ROOT;
+
+    if (!fs.existsSync(root)) {
+      throw new Error(`Flaky report folder not found at ${root}`);
+    }
+
+    const snapshotFolders = fs
+      .readdirSync(root, { withFileTypes: true })
+      .filter((entry) => entry.isDirectory())
+      .map((entry) => path.join(root, entry.name))
+      .filter((dir) => fs.existsSync(path.join(dir, 'flaky-report.html')))
+      .sort((a, b) => fs.statSync(b).mtimeMs - fs.statSync(a).mtimeMs);
+
+    const reportPath =
+      snapshotFolders.length > 0
+        ? path.join(snapshotFolders[0], 'flaky-report.html')
+        : path.join(root, 'flaky-report.html');
+
+    if (!fs.existsSync(reportPath)) {
+      throw new Error(`Flaky report not found at ${reportPath}`);
+    }
+
+    this.openFile(reportPath);
+  }
+
+  /**
    * Generates Allure report for the latest run.
    * If open=true, it will also open the report.
    */
@@ -163,6 +194,8 @@ if (require.main === module) {
     GenerateReports.openHtmlReport();
   } else if (mode === 'priority') {
     GenerateReports.openPriorityReport();
+  } else if (mode === 'flaky') {
+    GenerateReports.openFlakyReport();
   } else if (mode === 'allure') {
     const open = process.argv.includes('--open');
     GenerateReports.generateAllureReport(open);
@@ -171,6 +204,7 @@ if (require.main === module) {
 Usage:
   npx ts-node src/helper/reporting/GenerateReports.ts html
   npx ts-node src/helper/reporting/GenerateReports.ts priority
+  npx ts-node src/helper/reporting/GenerateReports.ts flaky
   npx ts-node src/helper/reporting/GenerateReports.ts allure [--open]
 `);
   }

@@ -4,5 +4,6 @@ test-results
 playwright-report
 allure-results
 allure-report
+flaky-report
 reports
 .env

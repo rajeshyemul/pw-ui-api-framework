@@ -1,6 +1,6 @@
 import { ApiClient } from '@core/ApiClient';
 import { logger } from '@core/Logger';
-import { configManager } from '@config/ConfigManager';
+import { ConfigManager } from '@config/ConfigManager';
 import { LoginRequest, LoginResponse } from '@contracts/AuthContract';
 
 class AuthManager {
@@ -13,8 +13,8 @@ class AuthManager {
     }
 
     const credentials: LoginRequest = {
-      username: configManager.getUsername(),
-      password: configManager.getPassword(),
+      username: ConfigManager.getUsername(),
+      password: ConfigManager.getPassword(),
     };
 
     logger.info('Authenticating admin user', { username: credentials.username });

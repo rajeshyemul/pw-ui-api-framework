@@ -7,11 +7,11 @@ import {
   BucketPlan,
   DiscoveredTestCase,
   OrderedRunSummary,
-} from '../helper/models/runner/runnerTypes';
-import { RunnerConstants } from '../support/constants/RunnerConstants';
+} from '../../helper/models/runner/runnerTypes';
+import { RunnerConstants } from '../../support/constants/RunnerConstants';
 import { OrderedReportParser } from './OrderedReportParser';
 import { OrderedSummaryWriter } from './OrderedSummary';
-import { PathConstants } from '../support/constants/PathConstants';
+import { PathConstants } from '../../support/constants/PathConstants';
 import { OrderedExecution } from './OrderedExecution';
 
 export class TestOrderManager {

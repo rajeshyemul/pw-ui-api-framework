@@ -1,5 +1,5 @@
 import { APIRequestContext, APIResponse } from '@playwright/test';
-import { configManager } from '@config/ConfigManager';
+import { ConfigManager } from '@config/ConfigManager';
 import { authManager } from '@core/AuthManager';
 import { logger } from '@core/Logger';
 import { metricsCollector } from '@observability/MetricsCollector';
@@ -8,7 +8,7 @@ export class ApiClient {
   private readonly maxRetries: number;
 
   constructor(private readonly request: APIRequestContext) {
-    this.maxRetries = configManager.getRetryCount();
+    this.maxRetries = ConfigManager.getRetryCount();
   }
 
   private normalizeEndpoint(endpoint: string): string {
@@ -62,7 +62,7 @@ export class ApiClient {
           attempt: attempt || undefined,
         });
 
-        if (configManager.isDebug()) {
+        if (ConfigManager.isDebug()) {
           const body = await response.text();
           logger.debug('Response body', { body: body.slice(0, 800) });
         }
@@ -117,7 +117,7 @@ export class ApiClient {
       () =>
         this.request.get(normalizedEndpoint, {
           headers: this.buildHeaders(options?.headers, options?.authenticated),
-          timeout: configManager.getTimeout(),
+          timeout: ConfigManager.getTimeout(),
         }),
       'GET',
       normalizedEndpoint
@@ -136,7 +136,7 @@ export class ApiClient {
         this.request.post(normalizedEndpoint, {
           headers: this.buildHeaders(options?.headers, options?.authenticated),
           data: body,
-          timeout: configManager.getTimeout(),
+          timeout: ConfigManager.getTimeout(),
         }),
       'POST',
       normalizedEndpoint
@@ -155,7 +155,7 @@ export class ApiClient {
         this.request.put(normalizedEndpoint, {
           headers: this.buildHeaders(options?.headers, options?.authenticated),
           data: body,
-          timeout: configManager.getTimeout(),
+          timeout: ConfigManager.getTimeout(),
         }),
       'PUT',
       normalizedEndpoint
@@ -174,7 +174,7 @@ export class ApiClient {
         this.request.patch(normalizedEndpoint, {
           headers: this.buildHeaders(options?.headers, options?.authenticated),
           data: body,
-          timeout: configManager.getTimeout(),
+          timeout: ConfigManager.getTimeout(),
         }),
       'PATCH',
       normalizedEndpoint
@@ -191,7 +191,7 @@ export class ApiClient {
       () =>
         this.request.delete(normalizedEndpoint, {
           headers: this.buildHeaders(options?.headers, options?.authenticated),
-          timeout: configManager.getTimeout(),
+          timeout: ConfigManager.getTimeout(),
         }),
       'DELETE',
       normalizedEndpoint

@@ -6,8 +6,8 @@ import {
   FailurePolicy,
   OrderMode,
   PriorityTag,
-} from '../helper/models/runner/runnerTypes';
-import { RunnerConstants } from '../support/constants/RunnerConstants';
+} from '../../helper/models/runner/runnerTypes';
+import { RunnerConstants } from '../../support/constants/RunnerConstants';
 
 export class OrderedExecution {
   private static unique<T>(items: T[]): T[] {

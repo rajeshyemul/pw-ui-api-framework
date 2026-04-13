@@ -1,7 +1,7 @@
 import fs from 'fs';
 import path from 'path';
-import { OrderedRunSummary } from '../helper/models/runner/runnerTypes';
-import { PathConstants } from '../support/constants/PathConstants';
+import { OrderedRunSummary } from '../../helper/models/runner/runnerTypes';
+import { PathConstants } from '../../support/constants/PathConstants';
 
 export class OrderedSummaryWriter {
   /**

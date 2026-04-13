@@ -485,7 +485,7 @@ This is a good example of focused dependency injection design.
 export const apiTest = base.extend<ApiFixtures>({
   apiContext: async ({}, use) => {
     const context = await request.newContext({
-      baseURL: configManager.getApiRequestBaseUrl(),
+      baseURL: ConfigManager.getApiRequestBaseUrl(),
     });
 
     await use(context);
@@ -840,7 +840,7 @@ const response = await this.executeWithRetry(
     this.request.post(normalizedEndpoint, {
       headers: this.buildHeaders(options?.headers, options?.authenticated),
       data: body,
-      timeout: configManager.getTimeout(),
+      timeout: ConfigManager.getTimeout(),
     }),
   'POST',
   normalizedEndpoint

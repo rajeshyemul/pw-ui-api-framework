@@ -5,7 +5,7 @@ import { AuthService } from '@services/AuthService';
 import { BookingService } from '@services/BookingService';
 import { RoomService } from '@services/RoomService';
 import { APIRequestContext, request } from '@playwright/test';
-import { configManager } from '@config/ConfigManager';
+import { ConfigManager } from '@config/ConfigManager';
 import { metricsCollector } from '@observability/MetricsCollector';
 import { TestDataCleanup } from '@test-data/TestDataCleanup';
 import { TestDataRegistry } from '@test-data/TestDataRegistry';
@@ -27,7 +27,7 @@ export const appTest = uiTest.extend<AppFixtures>({
     // eslint-disable-next-line no-empty-pattern
     async ({}, use) => {
     const context = await request.newContext({
-      baseURL: configManager.getApiRequestBaseUrl(),
+      baseURL: ConfigManager.getApiRequestBaseUrl(),
       extraHTTPHeaders: {
         Accept: 'application/json',
       },

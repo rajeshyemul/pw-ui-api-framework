@@ -1,7 +1,7 @@
 import { test } from "@playwright/test";
 import * as allure from "allure-js-commons";
 import * as fs from "fs";
-import { configManager } from "@config/ConfigManager";
+import { ConfigManager } from "@config/ConfigManager";
 import { Logger } from "../logger/Logger";
 import { TestMetadataOptions } from "./AllureMeta";
 
@@ -85,16 +85,16 @@ static async attachDetails(meta: TestMetadataOptions): Promise<void> {
   };
 
   // ===== Core hierarchy =====
-  await handleSingle(meta.epic, allure.epic, "allure:epic");
-  await handleSingle(meta.feature, allure.feature, "allure:feature");
+  await handleSingle(meta.epic, allure.epic, "epic");
+  await handleSingle(meta.feature, allure.feature, "feature");
 
   if (meta.story) {
     const stories = Array.isArray(meta.story) ? meta.story : [meta.story];
-    await handleMultiple(stories, allure.story, "allure:story");
+    await handleMultiple(stories, allure.story, "story");
   }
 
-  await handleSingle(meta.severity, allure.severity, "allure:severity");
-  await handleSingle(meta.owner, allure.owner, "allure:owner");
+  await handleSingle(meta.severity, allure.severity, "severity");
+  await handleSingle(meta.owner, allure.owner, "owner");
 
   if (meta.component) {
     await allure.label("component", meta.component);
@@ -386,8 +386,8 @@ static async attachDetails(meta: TestMetadataOptions): Promise<void> {
       "Node Version": process.version,
       Platform: process.platform,
       OS: process.arch,
-      Environment: configManager.getEnvironment(),
-      "Base URL": configManager.getUiBaseUrl()
+      Environment: ConfigManager.getEnvironment(),
+      "Base URL": ConfigManager.getUiBaseUrl()
     };
 
     Logger.info(`Environment Info: ${JSON.stringify(envInfo)}`);

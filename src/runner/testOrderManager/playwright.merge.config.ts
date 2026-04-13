@@ -1,7 +1,7 @@
 import { defineConfig } from '@playwright/test';
 import path from 'path';
-import { PathConstants } from '../support/constants/PathConstants';
-import { SetupConstants } from '../support/constants/SetupConstants';
+import { PathConstants } from '../../support/constants/PathConstants';
+import { SetupConstants } from '../../support/constants/SetupConstants';
 
 const reportRoot = process.env.REPORT_ROOT || path.join(process.cwd(), 'reports');
 

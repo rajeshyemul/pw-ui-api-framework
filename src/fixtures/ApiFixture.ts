@@ -1,5 +1,5 @@
 import { APIRequestContext, request, test as base } from '@playwright/test';
-import { configManager } from '@config/ConfigManager';
+import { ConfigManager } from '@config/ConfigManager';
 import { ApiClient } from '@core/ApiClient';
 import { AssertUtils } from '@helper/asserts/AssertUtils';
 import { AuthService } from '@services/AuthService';
@@ -27,7 +27,7 @@ export const apiTest = base.extend<ApiFixtures>({
     // eslint-disable-next-line no-empty-pattern
     async ({}, use) => {
     const context = await request.newContext({
-      baseURL: configManager.getApiRequestBaseUrl(),
+      baseURL: ConfigManager.getApiRequestBaseUrl(),
       extraHTTPHeaders: {
         Accept: 'application/json',
       },

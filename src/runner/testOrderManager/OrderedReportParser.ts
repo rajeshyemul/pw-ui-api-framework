@@ -1,5 +1,5 @@
 import { JsonSuite, JsonSpec, JsonReport, JsonTestResult } from '@helper/models/runner/orderReportInterface';
-import { DiscoveredTestCase, ExecutedTestResult } from '../helper/models/runner/runnerTypes';
+import { DiscoveredTestCase, ExecutedTestResult } from '../../helper/models/runner/runnerTypes';
 import { OrderedExecution } from './OrderedExecution';
 
 export class OrderedReportParser {

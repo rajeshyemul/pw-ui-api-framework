@@ -1,4 +1,4 @@
-import { configManager } from '@config/ConfigManager';
+import { ConfigManager } from '@config/ConfigManager';
 import { PageActions } from '@helper/actions/PageActions';
 import { StepRunner } from '@helper/reporting/StepRunner';
 import { BasePage } from '@pages/base/BasePage';
@@ -53,6 +53,6 @@ export class AdminLoginPage extends BasePage {
   }
 
   async loginAsAdmin(): Promise<void> {
-    await this.login(configManager.getUsername(), configManager.getPassword());
+    await this.login(ConfigManager.getUsername(), ConfigManager.getPassword());
   }
 }

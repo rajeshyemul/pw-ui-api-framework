@@ -38,6 +38,7 @@
     "test:ordered:dry-run": "ORDER_DRY_RUN=true ORDER_MODE=priority ts-node src/runner/TestOrderManager.ts",
     "report:html": "npx ts-node src/helper/reporting/GenerateReports.ts html",
     "report:priority": "npx ts-node src/helper/reporting/GenerateReports.ts priority",
+    "report:flaky": "npx ts-node src/helper/reporting/GenerateReports.ts flaky",
     "report:allure": "npx ts-node src/helper/reporting/GenerateReports.ts allure --open",
     "format": "prettier --write .",
     "clean": "rm -rf reports test-results playwright-report allure-results",
@@ -94,6 +95,7 @@
   },
   "dependencies": {
     "@faker-js/faker": "^9.9.0",
+    "date-fns-tz": "^3.2.0",
     "zod": "^4.3.6"
   },
   "lint-staged": {
