@@ -4,6 +4,7 @@ import { PageActions } from '@helper/actions/PageActions';
 import { StepRunner } from '@helper/reporting/StepRunner';
 import { ApplicationUrls } from '@support/constants/ApplicationUrls';
 import { BookingHomePageLocators } from '@support/locators/BookingHomePageLocators';
+import { Locator } from '@playwright/test';
 
 export class HomePage extends BasePage {
   protected pageUrl = ApplicationUrls.HOME;
@@ -14,19 +15,37 @@ export class HomePage extends BasePage {
     super(pageActions);
   }
 
+  /**
+   * Gets the locator for room card titles on the home page.
+   * @returns {import('@playwright/test').Locator} The locator for room card titles.
+   */
   private get roomTitles() {
     return this.locator(BookingHomePageLocators.ROOM_CARD_TITLE);
   }
 
-  private getRoomCardByType(roomType: string) {
+  /**
+   * Gets a room card by its type.
+   * @param {string} roomType - The type of the room to retrieve.
+   * @returns {import('@playwright/test').Locator} The locator for the specified room card.
+   */
+  private getRoomCardByType(roomType: string):Locator {
     const title = this.roomTitles.filter({ hasText: roomType }).first();
     return title.locator('..').locator('..');
   }
 
-  private getRoomCardByIndex(index: number) {
+  /**
+   * Gets a room card by its index.
+   * @param {number} index - The index of the room card to retrieve.
+   * @returns {import('@playwright/test').Locator} The locator for the specified room card.
+   */
+  private getRoomCardByIndex(index: number):Locator {
     return this.roomTitles.nth(index).locator('..').locator('..');
   }
 
+  /**
+   * Focuses on the room catalog section of the home page.
+   * @returns {Promise<void>} A promise that resolves when the operation is complete.
+   */
   private async focusRoomCatalog(): Promise<void> {
     const roomsHeading = this.locatorByText(/^Our Rooms$/);
     await this.ui.element.scrollIntoView(roomsHeading);
@@ -38,11 +57,15 @@ export class HomePage extends BasePage {
     );
   }
 
+  /**
+   * Verifies that the room catalog section is visible on the home page.
+   * @returns {Promise<void>} A promise that resolves when the verification is complete.
+   */
   async verifyRoomCatalogVisible(): Promise<void> {
     await StepRunner.run('Home Page - verify room catalog', async () => {
       await this.focusRoomCatalog();
       await this.expectUtils.expectElementToBeVisible(
-        this.locator(BookingHomePageLocators.AVAILABILITY_CARD),
+        BookingHomePageLocators.AVAILABILITY_CARD,
         'availability card',
         'Availability card is not visible'
       );
@@ -56,6 +79,10 @@ export class HomePage extends BasePage {
     });
   }
 
+  /**
+   * Verifies that the room cards on the home page are populated with data.
+   * @returns {Promise<void>} A promise that resolves when the verification is complete.
+   */
   async verifyRoomCardsArePopulated(): Promise<void> {
     await StepRunner.run('Home Page - verify room cards are populated', async () => {
       await this.focusRoomCatalog();
@@ -99,6 +126,11 @@ export class HomePage extends BasePage {
     });
   }
 
+  /**
+   * Verifies that the public room catalog matches the API data.
+   * @param {Room[]} rooms - An array of room objects.
+   * @returns {Promise<void>} A promise that resolves when the verification is complete.
+   */   
   async verifyPublicCatalogMatchesRooms(rooms: Room[]): Promise<void> {
     await StepRunner.run('Home Page - verify public room catalog matches API data', async () => {
       const expectedRooms = rooms.slice(0, 3);

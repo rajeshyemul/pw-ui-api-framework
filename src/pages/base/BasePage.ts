@@ -29,18 +29,39 @@ export abstract class BasePage {
     Logger.debug(`${this.constructor.name} initialized`);
   }
 
+  /**
+   * Gets the Playwright Page instance.
+   * @returns {Page} The Playwright Page instance.
+   */
   protected get page(): Page {
     return this.pageActions.getPage();
   }
 
+  /**
+   * Gets the Playwright Locator instance.
+    * @param {string} selector - The selector for the element.
+    * @returns {Locator} The Playwright Locator instance.
+    */  
   protected locator(selector: string): Locator {
     return LocatorFactory.getLocator(this.pageActions, selector);
   }
 
+  /**
+   * Gets a Playwright Locator for an element containing specific text.
+   * @param {string | RegExp} text - The text to locate.
+   * @returns {Locator} The Playwright Locator instance.
+   */ 
   protected locatorByText(text: string | RegExp): Locator {
     return LocatorFactory.getLocatorByText(this.pageActions, text);
   }
 
+  /**
+   * Gets a Playwright Locator for an element with a specific role.
+   * @param {string} role - The role of the element.
+   * @param {Object} [options] - Additional options for locating the element.
+   * @param {string | RegExp} [options.name] - The accessible name of the element.
+   * @returns {Locator} The Playwright Locator instance.
+   */ 
   protected locatorByRole(
     role: 'button' | 'link' | 'textbox' | 'heading' | 'img' | 'list' | 'listitem',
     options?: { name?: string | RegExp }
@@ -48,6 +69,10 @@ export abstract class BasePage {
     return LocatorFactory.getLocatorByRole(this.pageActions, role, options);
   }
 
+  /**
+   * Navigates to the page.
+   * @returns {Promise<void>} A promise that resolves when the navigation is complete.
+   */
   async navigate(): Promise<void> {
     const pageName = this.constructor.name;
     await StepRunner.run(`${pageName} - navigation`, async () => {
@@ -57,6 +82,10 @@ export abstract class BasePage {
     });
   }
 
+  /**
+   * Verifies the page title.
+   * @returns {Promise<void>} A promise that resolves when the verification is complete.
+   */
   async verifyPageLoaded(): Promise<void> {
     const pageName = this.constructor.name;
     await StepRunner.run(`${pageName} - title verification`, async () => {

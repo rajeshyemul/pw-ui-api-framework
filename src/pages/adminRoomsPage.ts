@@ -13,15 +13,19 @@ export class AdminRoomsPage extends BasePage {
     super(pageActions);
   }
 
+  /**
+   * Verifies that the room management page is visible and contains the expected elements.
+   * @returns {Promise<void>} A promise that resolves when the verification is complete.
+   */
   async verifyRoomManagementVisible(): Promise<void> {
     await StepRunner.run('Admin Rooms - verify room management page', async () => {
       await this.expectUtils.expectElementToBeVisible(
-        this.locator(AdminRoomsPageLocators.CREATE_BUTTON),
+        AdminRoomsPageLocators.CREATE_BUTTON,
         'create room button',
         'Create room button is not visible'
       );
       await this.expectUtils.expectElementToBeVisible(
-        this.locator(AdminRoomsPageLocators.LOGOUT_BUTTON),
+        AdminRoomsPageLocators.LOGOUT_BUTTON,
         'logout button',
         'Logout button is not visible'
       );
@@ -38,6 +42,11 @@ export class AdminRoomsPage extends BasePage {
     });
   }
 
+  /**
+   * Verifies that a specific room is visible on the page.
+   * @param {string} roomName - The name of the room to verify.
+   * @returns {Promise<void>} A promise that resolves when the verification is complete.
+   */
   async verifyRoomVisible(roomName: string): Promise<void> {
     await StepRunner.run(`Admin Rooms - verify room "${roomName}"`, async () => {
       await this.expectUtils.expectElementToBeVisible(
@@ -49,16 +58,20 @@ export class AdminRoomsPage extends BasePage {
     });
   }
 
+  /**
+   * Verifies that the room inventory is populated with seeded data.
+   * @returns {Promise<void>} A promise that resolves when the verification is complete.
+   */
   async verifyRoomInventoryIsPopulated(): Promise<void> {
     await StepRunner.run('Admin Rooms - verify room inventory is populated', async () => {
       await this.expectUtils.expectElementToContainText(
-        this.locator(AdminRoomsPageLocators.BODY),
+        AdminRoomsPageLocators.BODY,
         'room inventory headers',
         /Room #|Type|Price/i,
         'Room inventory headers are not visible in the admin rooms page'
       );
       await this.expectUtils.expectElementToContainText(
-        this.locator(AdminRoomsPageLocators.BODY),
+        AdminRoomsPageLocators.BODY,
         'seeded room types',
         /Single|Double|Suite/i,
         'Expected seeded room types are not visible in the admin rooms page'
@@ -66,6 +79,11 @@ export class AdminRoomsPage extends BasePage {
     });
   }
 
+  /**
+   * Verifies that the expected room names are visible on the page.
+   * @param {string[]} expectedRoomNames - An array of expected room names.
+   * @returns {Promise<void>} A promise that resolves when the verification is complete.
+   */
   async verifyRoomNamesVisible(expectedRoomNames: string[]): Promise<void> {
     await this.assertUtils.assertGreaterThan(
       expectedRoomNames.length,
@@ -73,6 +91,7 @@ export class AdminRoomsPage extends BasePage {
       'Expected room names collection should not be empty'
     );
 
+    // Verify each expected room name is visible on the page
     await StepRunner.run('Admin Rooms - verify expected room names', async () => {
       for (const roomName of expectedRoomNames) {
         await this.verifyRoomVisible(roomName);
